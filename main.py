@@ -14,6 +14,7 @@ clock = pygame.time.Clock()
 ship = pygame.image.load('spaceship.png')
 bullet = pygame.image.load('bullet.png')
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
+enemy = pygame.image.load('res/sprite/enemy.png')
 a = False
 d = False
 x = canvas.get_width() / 2 - ship.get_width() / 2
@@ -80,6 +81,7 @@ while True:
     # 그리기
     canvas.fill((255,255,255))
     canvas.blit(ship,(x, y))
+    canvas.blit(enemy, (0,0))
     if bullet_visible:
         canvas.blit(bullet, (bullet_x, bullet_y))    
 
