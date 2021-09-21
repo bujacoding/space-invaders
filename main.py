@@ -13,6 +13,7 @@ clock = pygame.time.Clock()
 
 ship = pygame.image.load('spaceship.png')
 bullet = pygame.image.load('bullet.png')
+shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 a = False
 d = False
 x = canvas.get_width() / 2 - ship.get_width() / 2
@@ -45,6 +46,8 @@ while True:
             if event.key == pygame.K_SPACE:
                 if bullet_visible == False:
                     fire = True
+                    shoot.play()
+
 
         if event.type == KEYUP:
             if event.key == ord("a"):
