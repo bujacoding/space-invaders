@@ -27,6 +27,7 @@ enemy_x = 0
 enemy_y = 0
 left_to_right = True
 
+
 #상수
 BULLET_SPEED = 15
 SHIP_SPEED = 5
@@ -78,6 +79,23 @@ while True:
     if bullet_y < 0:
         bullet_visible = False
 
+    e_x2 = enemy_x + enemy.get_width()
+    e_y2 = enemy_y + enemy.get_height()
+    b_x2 = bullet_x + bullet.get_width()
+    b_y2 = bullet_y + bullet.get_height()
+
+    if b_x2 < enemy_x:
+        collision = False
+    elif e_x2 < bullet_x:
+        collision = False
+    elif b_y2 < enemy_y:
+        collision = False
+    elif e_y2 < enemy_y:
+        collision = False
+    else:
+        collision = True
+    print(collision)
+
     if left_to_right:
         enemy_x += 3
         if canvas.get_width() < enemy_x + enemy.get_width():
@@ -86,8 +104,8 @@ while True:
         enemy_x -= 3
         if enemy_x < 0:
             left_to_right = True
-
     
+
     # 그리기
     canvas.fill((255,255,255))
     canvas.blit(ship,(x, y))
