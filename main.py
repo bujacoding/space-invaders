@@ -23,7 +23,8 @@ bullet_y = y
 bullet_visible = False
 
 #상수
-BULLET_SPEED = 10
+BULLET_SPEED = 15
+SHIP_SPEED = 5
 
 # 사용자 입력
 # 연산
@@ -54,9 +55,9 @@ while True:
 
     # 연산
     if a == True:
-        x -= 5
+        x -= SHIP_SPEED
     if d == True:
-        x += 5
+        x += SHIP_SPEED
     if x >= canvas.get_width() - ship.get_width():
         x = canvas.get_width() - ship.get_width()
     if x < 0:
