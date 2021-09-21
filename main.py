@@ -47,6 +47,8 @@ while True:
         x += 5
     if x >= canvas.get_width() - ship.get_width():
         x = canvas.get_width() - ship.get_width()
+    if x < 0:
+        x = 0
 
     # 그리기
     canvas.fill((255,255,255))
