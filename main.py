@@ -26,7 +26,7 @@ bullet_visible = False
 enemy_x = 0
 enemy_y = 0
 left_to_right = True
-
+enemy_visible = True
 
 #상수
 BULLET_SPEED = 15
@@ -88,31 +88,51 @@ while True:
         collision = False
     elif e_x2 < bullet_x:
         collision = False
-    elif b_y2 < enemy_y:
+    elif e_y2 < bullet_y:
         collision = False
-    elif e_y2 < enemy_y:
+    elif  b_y2 < enemy_y:
         collision = False
     else:
         collision = True
-    print(collision)
+    
+    print(collision)         
+    if collision:
+        bullet_visible = False
+        fire = False
+        enemy_visible = False
+
+    if enemy_visible == False:
+        left_to_right = True
+        enemy_x = 0
+        enemy_y = 0
+        enemy_visible = True
+        
+
+
 
     if left_to_right:
-        enemy_x += 3
-        if canvas.get_width() < enemy_x + enemy.get_width():
-            left_to_right = False
+        if enemy_visible:
+            enemy_x += 3
+            if canvas.get_width() < enemy_x + enemy.get_width():
+                enemy_y += enemy.get_height()
+                left_to_right = False
+                
+
     else:
-        enemy_x -= 3
-        if enemy_x < 0:
-            left_to_right = True
-    
+        if enemy_visible:
+            enemy_x -= 3
+            if enemy_x < 0:
+                enemy_y += enemy.get_height()
+                left_to_right = True
+            
 
     # 그리기
     canvas.fill((255,255,255))
     canvas.blit(ship,(x, y))
-    canvas.blit(enemy, (enemy_x,enemy_y))
     if bullet_visible:
         canvas.blit(bullet, (bullet_x, bullet_y))    
-
+    if enemy_visible:
+            canvas.blit(enemy, (enemy_x,enemy_y))
 
     pygame.display.update()
 
