@@ -22,6 +22,9 @@ bullet_x = x
 bullet_y = y
 bullet_visible = False
 
+#상수
+BULLET_SPEED = 10
+
 # 사용자 입력
 # 연산
 # 그리기
@@ -63,7 +66,8 @@ while True:
         bullet_x = x + ship.get_width() / 2 - bullet.get_width() / 2 + 1
         bullet_y = y 
         fire = False
-    bullet_y -= 5    
+
+    bullet_y -= BULLET_SPEED    
     if bullet_y < 0:
         bullet_visible = False
 
