@@ -14,9 +14,13 @@ d = False
 x = 0
 y = 0
 
+# 사용자 입력
+# 연산
+# 그리기
+# 애니메이션 연산
+
 while True:
-    displaysurf.fill((255,255,255))
-    displaysurf.blit(ship,(x, y))
+    # 입력
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -31,10 +35,18 @@ while True:
                 a = False
             if event.key == ord("d"):
                 d = False
+
+
+    # 연산
     if a == True:
         x -= 5
     if d == True:
         x += 5
 
-    clock.tick(60)
+    # 그리기
+    displaysurf.fill((255,255,255))
+    displaysurf.blit(ship,(x, y))
+
     pygame.display.update()
+
+    clock.tick(60)
