@@ -11,8 +11,8 @@ clock = pygame.time.Clock()
 ship = pygame.image.load('spaceship.png')
 a = False
 d = False
-x = 0
-y = 0
+x = displaysurf.get_width() / 2 - ship.get_width() / 2
+y = displaysurf.get_height() - ship.get_height()
 
 # 사용자 입력
 # 연산
