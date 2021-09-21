@@ -23,6 +23,9 @@ fire = False
 bullet_x = x
 bullet_y = y
 bullet_visible = False
+enemy_x = 0
+enemy_y = 0
+left_to_right = True
 
 #상수
 BULLET_SPEED = 15
@@ -48,7 +51,6 @@ while True:
                 if bullet_visible == False:
                     fire = True
                     shoot.play()
-
 
         if event.type == KEYUP:
             if event.key == ord("a"):
@@ -76,12 +78,20 @@ while True:
     if bullet_y < 0:
         bullet_visible = False
 
+    if left_to_right:
+        enemy_x += 3
+        if canvas.get_width() < enemy_x + enemy.get_width():
+            left_to_right = False
+    else:
+        enemy_x -= 3
+        if enemy_x < 0:
+            left_to_right = True
 
-
+    
     # 그리기
     canvas.fill((255,255,255))
     canvas.blit(ship,(x, y))
-    canvas.blit(enemy, (0,0))
+    canvas.blit(enemy, (enemy_x,enemy_y))
     if bullet_visible:
         canvas.blit(bullet, (bullet_x, bullet_y))    
 
