@@ -27,6 +27,7 @@ enemy_x = 0
 enemy_y = 0
 left_to_right = True
 enemy_visible = True
+b_collision = False
 
 #상수
 BULLET_SPEED = 15
@@ -36,6 +37,22 @@ SHIP_SPEED = 5
 # 연산
 # 그리기
 # 애니메이션 연산
+
+def collision(a_x1, a_x2, a_y1, a_y2, b_x1, b_x2, b_y1, b_y2, t):
+    if a_x2 < b_x1: #bullet = a , enemy = b
+        t = False
+    elif b_x2 < a_x1:
+        t = False
+    elif b_y2 < a_y1:
+        t = False
+    elif a_y2 < b_y1:
+        t = False
+    else:
+        t = True
+    
+    if t == True:
+        print(b_collision)
+
 
 while True:
     # 입력
@@ -84,19 +101,20 @@ while True:
     b_x2 = bullet_x + bullet.get_width()
     b_y2 = bullet_y + bullet.get_height()
 
-    if b_x2 < enemy_x:
-        collision = False
-    elif e_x2 < bullet_x:
-        collision = False
-    elif e_y2 < bullet_y:
-        collision = False
-    elif  b_y2 < enemy_y:
-        collision = False
-    else:
-        collision = True
+    # if b_x2 < enemy_x:
+    #     collision = False
+    # elif e_x2 < bullet_x:
+    #     collision = False
+    # elif e_y2 < bullet_y:
+    #     collision = False
+    # elif  b_y2 < enemy_y:
+    #     collision = False
+    # else:
+    #     collision = True
     
-    print(collision)         
-    if collision:
+    collision(enemy_x, e_x2, enemy_y, e_y2, bullet_x, b_x2, bullet_y, b_y2, b_collision)
+
+    if b_collision == True:
         bullet_visible = False
         fire = False
         enemy_visible = False
@@ -116,7 +134,7 @@ while True:
             if canvas.get_width() < enemy_x + enemy.get_width():
                 enemy_y += enemy.get_height()
                 left_to_right = False
-                
+
 
     else:
         if enemy_visible:
