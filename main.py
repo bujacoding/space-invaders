@@ -38,7 +38,8 @@ SHIP_SPEED = 5
 # 그리기
 # 애니메이션 연산
 
-def collision(a_x1, a_x2, a_y1, a_y2, b_x1, b_x2, b_y1, b_y2, t):
+def collision(a_x1, a_x2, a_y1, a_y2, b_x1, b_x2, b_y1, b_y2):
+    t = False
     if a_x2 < b_x1: #bullet = a , enemy = b
         t = False
     elif b_x2 < a_x1:
@@ -49,10 +50,10 @@ def collision(a_x1, a_x2, a_y1, a_y2, b_x1, b_x2, b_y1, b_y2, t):
         t = False
     else:
         t = True
-    
+
     if t == True:
         print(b_collision)
-
+    return t
 
 while True:
     # 입력
@@ -112,7 +113,7 @@ while True:
     # else:
     #     collision = True
     
-    collision(enemy_x, e_x2, enemy_y, e_y2, bullet_x, b_x2, bullet_y, b_y2, b_collision)
+    b_collision = collision(enemy_x, e_x2, enemy_y, e_y2, bullet_x, b_x2, bullet_y, b_y2)
 
     if b_collision == True:
         bullet_visible = False
