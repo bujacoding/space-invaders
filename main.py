@@ -14,7 +14,56 @@ clock = pygame.time.Clock()
 ship = pygame.image.load('spaceship.png')
 bullet = pygame.image.load('bullet.png')
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
+
+# enemy 공통
+left_to_right = True
+
+# enemy 개별
 enemy = pygame.image.load('res/sprite/enemy.png')
+# enemy_x = 0
+# enemy_y = 0
+# enemy_visible = True
+
+class Enemy:
+    def __init__(self):
+        self.image = pygame.image.load('res/sprite/enemy.png')
+        self.x = 0
+        self.y = 0
+
+    def set_x(self, x):
+        self.x = x
+
+
+    def get_width(self):
+        return self.image.get_width()
+
+    def get_height(self):
+        return self.image.get_height()
+
+    def update(self):
+        global left_to_right
+        if left_to_right:
+            self.x += 3
+            if canvas.get_width() < self.x + self.get_width():
+                self.y += self.get_height()
+                left_to_right = False
+
+
+        else:
+            self.x -= 3
+            if self.x < 0:
+                self.y += self.get_height()
+                left_to_right = True
+            
+
+    def render(self, canvas):
+        canvas.blit(self.image, (self.x, self.y))
+
+
+enemies = [Enemy(), Enemy(), Enemy(), Enemy(), Enemy(),]
+for index, enemy in enumerate(enemies):
+    enemy.set_x(index * enemy.get_width())
+
 a = False
 d = False
 x = canvas.get_width() / 2 - ship.get_width() / 2
@@ -23,10 +72,6 @@ fire = False
 bullet_x = x
 bullet_y = y
 bullet_visible = False
-enemy_x = 0
-enemy_y = 0
-left_to_right = True
-enemy_visible = True
 b_collision = False
 
 #상수
@@ -94,61 +139,17 @@ while True:
     if bullet_y < 0:
         bullet_visible = False
 
-    e_x2 = enemy_x + enemy.get_width()
-    e_y2 = enemy_y + enemy.get_height()
-    b_x2 = bullet_x + bullet.get_width()
-    b_y2 = bullet_y + bullet.get_height()
-
-    # if b_x2 < enemy_x:
-    #     collision = False
-    # elif e_x2 < bullet_x:
-    #     collision = False
-    # elif e_y2 < bullet_y:
-    #     collision = False
-    # elif  b_y2 < enemy_y:
-    #     collision = False
-    # else:
-    #     collision = True
-    
-    b_collision = collision(enemy_x, e_x2, enemy_y, e_y2, bullet_x, b_x2, bullet_y, b_y2)
-
-    if b_collision == True:
-        bullet_visible = False
-        fire = False
-        enemy_visible = False
-
-    if enemy_visible == False:
-        left_to_right = True
-        enemy_x = 0
-        enemy_y = 0
-        enemy_visible = True
-        
-
-
-
-    if left_to_right:
-        if enemy_visible:
-            enemy_x += 3
-            if canvas.get_width() < enemy_x + enemy.get_width():
-                enemy_y += enemy.get_height()
-                left_to_right = False
-
-
-    else:
-        if enemy_visible:
-            enemy_x -= 3
-            if enemy_x < 0:
-                enemy_y += enemy.get_height()
-                left_to_right = True
-            
+    for enemy in enemies:
+        enemy.update()
 
     # 그리기
     canvas.fill((255,255,255))
     canvas.blit(ship,(x, y))
     if bullet_visible:
-        canvas.blit(bullet, (bullet_x, bullet_y))    
-    if enemy_visible:
-            canvas.blit(enemy, (enemy_x,enemy_y))
+        canvas.blit(bullet, (bullet_x, bullet_y))
+    
+    for enemy in enemies:
+        enemy.render(canvas)
 
     pygame.display.update()
 
