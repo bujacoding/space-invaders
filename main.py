@@ -39,21 +39,18 @@ SHIP_SPEED = 5
 # 애니메이션 연산
 
 def collision(a_x1, a_x2, a_y1, a_y2, b_x1, b_x2, b_y1, b_y2):
-    t = False
-    if a_x2 < b_x1: #bullet = a , enemy = b
-        t = False
+    if a_x2 < b_x1: 
+        return False
     elif b_x2 < a_x1:
-        t = False
+        return False
     elif b_y2 < a_y1:
-        t = False
+        return False
     elif a_y2 < b_y1:
-        t = False
+        return False
     else:
-        t = True
+        return True
 
-    if t == True:
-        print(b_collision)
-    return t
+
 
 while True:
     # 입력
