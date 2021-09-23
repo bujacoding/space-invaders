@@ -5,8 +5,6 @@ from pygame.locals import *
 # enemy 공통
 left_to_right = True
 
-enemy = pygame.image.load('res/sprite/enemy.png')
-
 
 class Enemy:
     def __init__(self):

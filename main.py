@@ -2,7 +2,7 @@ import pygame
 import sys
 from pygame.locals import *
 import os
-import enemy
+from enemy import Enemy
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'{1000},{200}'
 
@@ -17,8 +17,8 @@ bullet = pygame.image.load('bullet.png')
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
 
-enemies = [enemy.Enemy(), enemy.Enemy(), enemy.Enemy(),
-           enemy.Enemy(), enemy.Enemy(), ]
+enemies = [Enemy(), Enemy(), Enemy(),
+           Enemy(), Enemy(), ]
 for index, enemy in enumerate(enemies):
     enemy.set_x(index * enemy.get_width())
 
