@@ -2,6 +2,7 @@ import pygame
 import sys
 from pygame.locals import *
 import os
+import enemy
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'{1000},{200}'
 
@@ -15,50 +16,9 @@ ship = pygame.image.load('spaceship.png')
 bullet = pygame.image.load('bullet.png')
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
-# enemy 공통
-left_to_right = True
 
-# enemy 개별
-enemy = pygame.image.load('res/sprite/enemy.png')
-# enemy_x = 0
-# enemy_y = 0
-# enemy_visible = True
-
-
-class Enemy:
-    def __init__(self):
-        self.image = pygame.image.load('res/sprite/enemy.png')
-        self.x = 0
-        self.y = 0
-
-    def set_x(self, x):
-        self.x = x
-
-    def get_width(self):
-        return self.image.get_width()
-
-    def get_height(self):
-        return self.image.get_height()
-
-    def update(self):
-        global left_to_right
-        if left_to_right:
-            self.x += 3
-            if canvas.get_width() < self.x + self.get_width():
-                self.y += self.get_height()
-                left_to_right = False
-
-        else:
-            self.x -= 3
-            if self.x < 0:
-                self.y += self.get_height()
-                left_to_right = True
-
-    def render(self, canvas):
-        canvas.blit(self.image, (self.x, self.y))
-
-
-enemies = [Enemy(), Enemy(), Enemy(), Enemy(), Enemy(), ]
+enemies = [enemy.Enemy(), enemy.Enemy(), enemy.Enemy(),
+           enemy.Enemy(), enemy.Enemy(), ]
 for index, enemy in enumerate(enemies):
     enemy.set_x(index * enemy.get_width())
 
@@ -137,7 +97,7 @@ while True:
         bullet_visible = False
 
     for enemy in enemies:
-        enemy.update()
+        enemy.update(canvas)
 
     # 그리기
     canvas.fill((255, 255, 255))
