@@ -8,6 +8,7 @@ os.environ['SDL_VIDEO_WINDOW_POS'] = f'{1000},{200}'
 
 pygame.init()
 
+pause = False
 canvas = pygame.display.set_mode((480, 640))
 pygame.display.set_caption('space invaders')
 clock = pygame.time.Clock()
@@ -31,6 +32,7 @@ bullet_x = x
 bullet_y = y
 bullet_visible = False
 b_collision = False
+
 
 # 상수
 BULLET_SPEED = 15
@@ -61,7 +63,12 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+
         if event.type == KEYDOWN:
+            if event.key == ord("p"):
+                pause = not pause
+
+        if not pause and event.type == KEYDOWN:
             if event.key == ord("a"):
                 a = True
             if event.key == ord("d"):
@@ -71,33 +78,34 @@ while True:
                     fire = True
                     shoot.play()
 
-        if event.type == KEYUP:
+        if not pause and event.type == KEYUP:
             if event.key == ord("a"):
                 a = False
             if event.key == ord("d"):
                 d = False
 
     # 연산
-    if a == True:
-        x -= SHIP_SPEED
-    if d == True:
-        x += SHIP_SPEED
-    if x >= canvas.get_width() - ship.get_width():
-        x = canvas.get_width() - ship.get_width()
-    if x < 0:
-        x = 0
-    if fire:
-        bullet_visible = True
-        bullet_x = x + ship.get_width() / 2 - bullet.get_width() / 2 + 1
-        bullet_y = y
-        fire = False
+    if not pause:
+        if a == True:
+            x -= SHIP_SPEED
+        if d == True:
+            x += SHIP_SPEED
+        if x >= canvas.get_width() - ship.get_width():
+            x = canvas.get_width() - ship.get_width()
+        if x < 0:
+            x = 0
+        if fire:
+            bullet_visible = True
+            bullet_x = x + ship.get_width() / 2 - bullet.get_width() / 2 + 1
+            bullet_y = y
+            fire = False
 
-    bullet_y -= BULLET_SPEED
-    if bullet_y < 0:
-        bullet_visible = False
+        bullet_y -= BULLET_SPEED
+        if bullet_y < 0:
+            bullet_visible = False
 
-    for enemy in enemies:
-        enemy.update(canvas)
+        for enemy in enemies:
+            enemy.update(canvas)
 
     # 그리기
     canvas.fill((255, 255, 255))
