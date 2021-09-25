@@ -4,6 +4,7 @@ import sys
 from pygame.locals import *
 import os
 from enemy import Enemy
+from ship import Ship
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'{1000},{200}'
 
@@ -14,12 +15,11 @@ canvas = pygame.display.set_mode((480, 640))
 pygame.display.set_caption('space invaders')
 clock = pygame.time.Clock()
 
-ship = pygame.image.load('res/sprite/spaceship.png')
 bullet = pygame.image.load('res/sprite/bullet.png')
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
 manager = Manager()
-
+ship = Ship()
 enemies = [Enemy(manager), Enemy(manager), Enemy(manager),
            Enemy(manager), Enemy(manager), ]
 for index, enemy in enumerate(enemies):
@@ -27,11 +27,10 @@ for index, enemy in enumerate(enemies):
 
 a = False
 d = False
-x = canvas.get_width() / 2 - ship.get_width() / 2
-y = canvas.get_height() - ship.get_height()
+ship.set_initial_position(canvas)
 fire = False
-bullet_x = x
-bullet_y = y
+bullet_x = 0
+bullet_y = 0
 bullet_visible = False
 b_collision = False
 
@@ -62,7 +61,7 @@ def collision(a_x1, a_x2, a_y1, a_y2, b_x1, b_x2, b_y1, b_y2):
 while True:
     # 입력
     for event in pygame.event.get():
-        if event.type == QUIT:
+        if event.type == QUIT or (event.type == KEYDOWN and event.key == pygame.K_ESCAPE):
             pygame.quit()
             sys.exit()
 
@@ -89,17 +88,17 @@ while True:
     # 연산
     if not pause:
         if a == True:
-            x -= SHIP_SPEED
+            ship.x -= SHIP_SPEED
         if d == True:
-            x += SHIP_SPEED
-        if x >= canvas.get_width() - ship.get_width():
-            x = canvas.get_width() - ship.get_width()
-        if x < 0:
-            x = 0
+            ship.x += SHIP_SPEED
+        if ship.x >= canvas.get_width() - ship.sprite.get_width():
+            ship.x = canvas.get_width() - ship.sprite.get_width()
+        if ship.x < 0:
+            ship.x = 0
         if fire:
             bullet_visible = True
-            bullet_x = x + ship.get_width() / 2 - bullet.get_width() / 2 + 1
-            bullet_y = y
+            bullet_x = ship.x + ship.sprite.get_width() / 2 - bullet.get_width() / 2 + 1
+            bullet_y = ship.y
             fire = False
 
         bullet_y -= BULLET_SPEED
@@ -114,12 +113,12 @@ while True:
 
     # 그리기
     canvas.fill((255, 255, 255))
-    canvas.blit(ship, (x, y))
     if bullet_visible:
         canvas.blit(bullet, (bullet_x, bullet_y))
 
     for enemy in enemies:
         enemy.render(canvas)
+    ship.render(canvas)
 
     pygame.display.update()
 
