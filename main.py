@@ -25,8 +25,6 @@ enemies = [Enemy(manager), Enemy(manager), Enemy(manager),
 for index, enemy in enumerate(enemies):
     enemy.set_x(index * enemy.get_width())
 
-a = False
-d = False
 ship.set_initial_position(canvas)
 fire = False
 bullet_x = 0
@@ -37,7 +35,6 @@ b_collision = False
 
 # 상수
 BULLET_SPEED = 15
-SHIP_SPEED = 5
 
 # 사용자 입력
 # 연산
@@ -71,9 +68,9 @@ while True:
 
         if not pause and event.type == KEYDOWN:
             if event.key == ord("a"):
-                a = True
+                ship.a = True
             if event.key == ord("d"):
-                d = True
+                ship.d = True
             if event.key == pygame.K_SPACE:
                 if bullet_visible == False:
                     fire = True
@@ -81,20 +78,13 @@ while True:
 
         if not pause and event.type == KEYUP:
             if event.key == ord("a"):
-                a = False
+                ship.a = False
             if event.key == ord("d"):
-                d = False
+                ship.d = False
 
     # 연산
     if not pause:
-        if a == True:
-            ship.x -= SHIP_SPEED
-        if d == True:
-            ship.x += SHIP_SPEED
-        if ship.x >= canvas.get_width() - ship.sprite.get_width():
-            ship.x = canvas.get_width() - ship.sprite.get_width()
-        if ship.x < 0:
-            ship.x = 0
+        ship.update(canvas)
         if fire:
             bullet_visible = True
             bullet_x = ship.x + ship.sprite.get_width() / 2 - bullet.get_width() / 2 + 1
