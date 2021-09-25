@@ -38,6 +38,9 @@ class Enemy:
         else:
             self.x -= 3
 
+        if self.manager.move_down:
+            self.move_down()
+
     def move_down(self):
         self.y += self.get_height()
 

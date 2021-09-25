@@ -110,6 +110,8 @@ while True:
         for enemy in enemies:
             enemy.update(canvas)
 
+        manager.clear()
+
     # 그리기
     canvas.fill((255, 255, 255))
     canvas.blit(ship, (x, y))
