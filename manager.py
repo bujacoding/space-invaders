@@ -1,4 +1,4 @@
-from enemy import left_to_right
+import enemy
 
 
 class Manager:
@@ -6,5 +6,4 @@ class Manager:
         pass
 
     def change_direction(self):
-        global left_to_right
-        left_to_right = not left_to_right
+        enemy.left_to_right = not enemy.left_to_right
