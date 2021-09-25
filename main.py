@@ -105,6 +105,7 @@ while True:
         bullet_y -= BULLET_SPEED
         if bullet_y < 0:
             bullet_visible = False
+        manager.update()
 
         for enemy in enemies:
             enemy.update(canvas)

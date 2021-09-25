@@ -30,7 +30,7 @@ class Enemy:
         # 끝에 닿았는가? -> 함수로 만들어 보자
         if self.is_reached(canvas):
             # 매니저에게 알리기
-            self.manager.change_direction()
+            self.manager.reserve_to_change_direction()
 
         # 정해진 방향으로 이동
         if self.manager.left_to_right:
