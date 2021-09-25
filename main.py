@@ -14,8 +14,8 @@ canvas = pygame.display.set_mode((480, 640))
 pygame.display.set_caption('space invaders')
 clock = pygame.time.Clock()
 
-ship = pygame.image.load('spaceship.png')
-bullet = pygame.image.load('bullet.png')
+ship = pygame.image.load('res/sprite/spaceship.png')
+bullet = pygame.image.load('res/sprite/bullet.png')
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
 manager = Manager()
