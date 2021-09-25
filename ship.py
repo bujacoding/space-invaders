@@ -8,8 +8,8 @@ class Ship():
         self.x = 0
         self.y = 0
         self.sprite = pygame.image.load('res/sprite/spaceship.png')
-        self.a = False
-        self.d = False
+        self.move_to_left = False
+        self.move_to_right = False
 
     def render(self, canvas):
         canvas.blit(self.sprite, (self.x, self.y))
@@ -19,9 +19,9 @@ class Ship():
         self.y = canvas.get_height() - self.sprite.get_height()
 
     def update(self, canvas):
-        if self.a == True:
+        if self.move_to_left:
             self.x -= SHIP_SPEED
-        if self.d == True:
+        if self.move_to_right:
             self.x += SHIP_SPEED
         if self.x >= canvas.get_width() - self.sprite.get_width():
             self.x = canvas.get_width() - self.sprite.get_width()

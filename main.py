@@ -68,9 +68,9 @@ while True:
 
         if not pause and event.type == KEYDOWN:
             if event.key == ord("a"):
-                ship.a = True
+                ship.move_to_left = True
             if event.key == ord("d"):
-                ship.d = True
+                ship.move_to_right = True
             if event.key == pygame.K_SPACE:
                 if bullet_visible == False:
                     fire = True
@@ -78,9 +78,9 @@ while True:
 
         if not pause and event.type == KEYUP:
             if event.key == ord("a"):
-                ship.a = False
+                ship.move_to_left = False
             if event.key == ord("d"):
-                ship.d = False
+                ship.move_to_right = False
 
     # 연산
     if not pause:
