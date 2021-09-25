@@ -1,3 +1,4 @@
+from manager import Manager
 import pygame
 import sys
 from pygame.locals import *
@@ -17,9 +18,10 @@ ship = pygame.image.load('spaceship.png')
 bullet = pygame.image.load('bullet.png')
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
+manager = Manager()
 
-enemies = [Enemy(), Enemy(), Enemy(),
-           Enemy(), Enemy(), ]
+enemies = [Enemy(manager), Enemy(manager), Enemy(manager),
+           Enemy(manager), Enemy(manager), ]
 for index, enemy in enumerate(enemies):
     enemy.set_x(index * enemy.get_width())
 

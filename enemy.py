@@ -7,11 +7,11 @@ left_to_right = True
 
 
 class Enemy:
-    def __init__(self):
+    def __init__(self, manager):
         self.image = pygame.image.load('res/sprite/enemy.png')
         self.x = 0
         self.y = 0
-        self.last_direction = left_to_right
+        self.manager = manager
 
     def set_x(self, x):
         self.x = x
@@ -29,17 +29,14 @@ class Enemy:
         else:
             return self.x < 0
 
-    def need_to_go_down(self):
-        return self.last_direction != left_to_right
-
     def update(self, canvas):
 
         global left_to_right
 
         # 끝에 닿았는가? -> 함수로 만들어 보자
         if self.is_reached(canvas):
-            # 모두에게 알리기
-            left_to_right = not left_to_right
+            # 매니저에게 알리기
+            self.manager.change_direction()
 
         # 정해진 방향으로 이동
         if left_to_right:
@@ -47,10 +44,8 @@ class Enemy:
         else:
             self.x -= 3
 
-        # 내려가야 하는가?
-        if self.need_to_go_down():
-            self.y += self.get_height()
-            self.last_direction = left_to_right
+    def move_down(self):
+        self.y += self.get_height()
 
     def render(self, canvas):
         canvas.blit(self.image, (self.x, self.y))
