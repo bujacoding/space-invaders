@@ -5,6 +5,7 @@ from pygame.locals import *
 import os
 from enemy import Enemy
 from ship import Ship
+from bullet import Bullet
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'{1000},{200}'
 
@@ -15,7 +16,7 @@ canvas = pygame.display.set_mode((480, 640))
 pygame.display.set_caption('space invaders')
 clock = pygame.time.Clock()
 
-bullet = pygame.image.load('res/sprite/bullet.png')
+bullet = Bullet()
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
 manager = Manager()
@@ -34,7 +35,7 @@ b_collision = False
 
 
 # 상수
-BULLET_SPEED = 15
+
 
 # 사용자 입력
 # 연산
@@ -72,7 +73,7 @@ while True:
             if event.key == ord("d"):
                 ship.move_to_right = True
             if event.key == pygame.K_SPACE:
-                if bullet_visible == False:
+                if bullet.visible == False:
                     fire = True
                     shoot.play()
 
@@ -86,14 +87,14 @@ while True:
     if not pause:
         ship.update(canvas)
         if fire:
-            bullet_visible = True
-            bullet_x = ship.x + ship.sprite.get_width() / 2 - bullet.get_width() / 2 + 1
-            bullet_y = ship.y
-            fire = False
+            bullet.visible = True
+            bullet.x = ship.x + ship.sprite.get_width() / 2 - bullet.sprite.get_width() / 2 + 1
+            bullet.y = ship.y
+            bullet.fire = False
 
-        bullet_y -= BULLET_SPEED
-        if bullet_y < 0:
-            bullet_visible = False
+        # 총알 움직이고 끝에 가면 사라지게하기
+        bullet.update()
+
         manager.update()
 
         for enemy in enemies:
@@ -103,11 +104,12 @@ while True:
 
     # 그리기
     canvas.fill((255, 255, 255))
-    if bullet_visible:
-        canvas.blit(bullet, (bullet_x, bullet_y))
 
     for enemy in enemies:
         enemy.render(canvas)
+
+    bullet.render(canvas)
+
     ship.render(canvas)
 
     pygame.display.update()
