@@ -36,16 +36,16 @@ class Enemy:
 
         global left_to_right
 
+        # 끝에 닿았는가? -> 함수로 만들어 보자
+        if self.is_reached(canvas):
+            # 모두에게 알리기
+            left_to_right = not left_to_right
+
         # 정해진 방향으로 이동
         if left_to_right:
             self.x += 3
         else:
             self.x -= 3
-
-        # 끝에 닿았는가? -> 함수로 만들어 보자
-        if self.is_reached(canvas):
-            # 모두에게 알리기
-            left_to_right = not left_to_right
 
         # 내려가야 하는가?
         if self.need_to_go_down():
