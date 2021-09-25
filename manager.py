@@ -1,9 +1,6 @@
-import enemy
-
-
 class Manager:
     def __init__(self) -> None:
-        pass
+        self.left_to_right = True
 
     def change_direction(self):
-        enemy.left_to_right = not enemy.left_to_right
+        self.left_to_right = not self.left_to_right

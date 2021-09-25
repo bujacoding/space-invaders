@@ -2,9 +2,6 @@ import pygame
 import sys
 from pygame.locals import *
 
-# enemy 공통
-left_to_right = True
-
 
 class Enemy:
     def __init__(self, manager):
@@ -23,15 +20,12 @@ class Enemy:
         return self.image.get_height()
 
     def is_reached(self, canvas) -> bool:
-        global left_to_right
-        if left_to_right:
+        if self.manager.left_to_right:
             return canvas.get_width() < self.x + self.get_width()
         else:
             return self.x < 0
 
     def update(self, canvas):
-
-        global left_to_right
 
         # 끝에 닿았는가? -> 함수로 만들어 보자
         if self.is_reached(canvas):
@@ -39,7 +33,7 @@ class Enemy:
             self.manager.change_direction()
 
         # 정해진 방향으로 이동
-        if left_to_right:
+        if self.manager.left_to_right:
             self.x += 3
         else:
             self.x -= 3
