@@ -1,3 +1,5 @@
+from object_manager import ObjectManager
+from bullet import Bullet
 import pygame
 from pygame.locals import *
 SHIP_SPEED = 5
@@ -27,3 +29,8 @@ class Ship():
             self.x = canvas.get_width() - self.sprite.get_width()
         if self.x < 0:
             self.x = 0
+
+    def fire(self, object_manager):
+        bullet = Bullet(x=self.x + self.sprite.get_width() / 2 - 1, y=self.y)
+        object_manager.append(bullet)
+        

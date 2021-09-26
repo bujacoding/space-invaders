@@ -5,7 +5,6 @@ from pygame.locals import *
 import os
 from enemy import Enemy
 from ship import Ship
-from bullet import Bullet
 from object_manager import ObjectManager
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'{1000},{200}'
@@ -19,7 +18,6 @@ clock = pygame.time.Clock()
 
 object_manager = ObjectManager()
 
-bullet = Bullet()
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
 enemy_manager = EnemyManager()
@@ -72,7 +70,6 @@ while True:
                 ship.move_to_left = False
                 ship.move_to_right = False
                 pause = not pause
-                
 
         if not pause and event.type == KEYDOWN:
             if event.key == ord("a"):
@@ -80,9 +77,7 @@ while True:
             if event.key == ord("d"):
                 ship.move_to_right = True
             if event.key == pygame.K_SPACE:
-                if bullet.visible == False:
-                    bullet.fire = True
-                    shoot.play()
+                ship.fire(object_manager)
 
         if not pause and event.type == KEYUP:
             if event.key == ord("a"):

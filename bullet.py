@@ -4,23 +4,15 @@ BULLET_SPEED = 15
 
 
 class Bullet():
-    def __init__(self):
-        self.x = 0
-        self.y = 0
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
         self.sprite = pygame.image.load('res/sprite/bullet.png')
-        self.visible = True
-        self.fire = False
+        self.sound = pygame.mixer.Sound("res/sound/shoot.wav")
+        self.sound.play()
 
     def render(self, canvas):
-        if self.visible:
-            canvas.blit(self.sprite, (self.x, self.y))
+        canvas.blit(self.sprite, (self.x, self.y))
 
-    def update(self, ship):
-        if self.fire:
-            self.visible = True
-            self.x = ship.x + ship.sprite.get_width() / 2 - self.sprite.get_width() / 2 + 1
-            self.y = ship.y
-            self.fire = False
+    def update(self, canvas):
         self.y -= BULLET_SPEED
-        if self.y < 0:
-            self.visible = False
