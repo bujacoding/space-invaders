@@ -6,6 +6,7 @@ import os
 from enemy import Enemy
 from ship import Ship
 from bullet import Bullet
+from object_manager import ObjectManager
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = f'{1000},{200}'
 
@@ -16,15 +17,21 @@ canvas = pygame.display.set_mode((480, 640))
 pygame.display.set_caption('space invaders')
 clock = pygame.time.Clock()
 
+object_manager = ObjectManager()
+
 bullet = Bullet()
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
 enemy_manager = EnemyManager()
 ship = Ship()
+object_manager.append(ship)
+
 enemies = [Enemy(enemy_manager), Enemy(enemy_manager), Enemy(enemy_manager),
            Enemy(enemy_manager), Enemy(enemy_manager), ]
+
 for index, enemy in enumerate(enemies):
     enemy.set_x(index * enemy.get_width())
+    object_manager.append(enemy)
 
 ship.set_initial_position(canvas)
 
@@ -62,7 +69,10 @@ while True:
 
         if event.type == KEYDOWN:
             if event.key == ord("p"):
+                ship.move_to_left = False
+                ship.move_to_right = False
                 pause = not pause
+                
 
         if not pause and event.type == KEYDOWN:
             if event.key == ord("a"):
@@ -82,26 +92,14 @@ while True:
 
     # 연산
     if not pause:
-        ship.update(canvas)
-
-        bullet.update(ship)
-
         enemy_manager.update()
-
-        for enemy in enemies:
-            enemy.update(canvas)
-
+        object_manager.update(canvas)
         enemy_manager.clear()
 
     # 그리기
     canvas.fill((255, 255, 255))
 
-    for enemy in enemies:
-        enemy.render(canvas)
-
-    bullet.render(canvas)
-
-    ship.render(canvas)
+    object_manager.render(canvas)
 
     pygame.display.update()
 
