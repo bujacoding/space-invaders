@@ -9,13 +9,18 @@ class Bullet():
         self.y = 0
         self.sprite = pygame.image.load('res/sprite/bullet.png')
         self.visible = True
-        self.fire
+        self.fire = False
 
     def render(self, canvas):
         if self.visible:
             canvas.blit(self.sprite, (self.x, self.y))
 
-    def update(self):
+    def update(self, ship):
+        if self.fire:
+            self.visible = True
+            self.x = ship.x + ship.sprite.get_width() / 2 - self.sprite.get_width() / 2 + 1
+            self.y = ship.y
+            self.fire = False
         self.y -= BULLET_SPEED
         if self.y < 0:
             self.visible = False

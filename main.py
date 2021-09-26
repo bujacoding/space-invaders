@@ -27,10 +27,7 @@ for index, enemy in enumerate(enemies):
     enemy.set_x(index * enemy.get_width())
 
 ship.set_initial_position(canvas)
-fire = False
-bullet_x = 0
-bullet_y = 0
-bullet_visible = False
+
 b_collision = False
 
 
@@ -74,7 +71,7 @@ while True:
                 ship.move_to_right = True
             if event.key == pygame.K_SPACE:
                 if bullet.visible == False:
-                    fire = True
+                    bullet.fire = True
                     shoot.play()
 
         if not pause and event.type == KEYUP:
@@ -86,14 +83,8 @@ while True:
     # 연산
     if not pause:
         ship.update(canvas)
-        if fire:
-            bullet.visible = True
-            bullet.x = ship.x + ship.sprite.get_width() / 2 - bullet.sprite.get_width() / 2 + 1
-            bullet.y = ship.y
-            bullet.fire = False
 
-        # 총알 움직이고 끝에 가면 사라지게하기
-        bullet.update()
+        bullet.update(ship)
 
         manager.update()
 
