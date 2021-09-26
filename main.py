@@ -1,4 +1,4 @@
-from manager import Manager
+from enemy_manager import EnemyManager
 import pygame
 import sys
 from pygame.locals import *
@@ -19,10 +19,10 @@ clock = pygame.time.Clock()
 bullet = Bullet()
 shoot = pygame.mixer.Sound('res/sound/shoot.wav')
 
-manager = Manager()
+enemy_manager = EnemyManager()
 ship = Ship()
-enemies = [Enemy(manager), Enemy(manager), Enemy(manager),
-           Enemy(manager), Enemy(manager), ]
+enemies = [Enemy(enemy_manager), Enemy(enemy_manager), Enemy(enemy_manager),
+           Enemy(enemy_manager), Enemy(enemy_manager), ]
 for index, enemy in enumerate(enemies):
     enemy.set_x(index * enemy.get_width())
 
@@ -86,12 +86,12 @@ while True:
 
         bullet.update(ship)
 
-        manager.update()
+        enemy_manager.update()
 
         for enemy in enemies:
             enemy.update(canvas)
 
-        manager.clear()
+        enemy_manager.clear()
 
     # 그리기
     canvas.fill((255, 255, 255))

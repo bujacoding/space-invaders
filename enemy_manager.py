@@ -1,4 +1,4 @@
-class Manager:
+class EnemyManager:
     def __init__(self) -> None:
         self.left_to_right = True
         self.change_direction_reserved = False
