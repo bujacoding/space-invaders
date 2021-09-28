@@ -32,5 +32,6 @@ class Ship():
 
     def fire(self, object_manager):
         bullet = Bullet(x=self.x + self.sprite.get_width() / 2 - 1, y=self.y)
+        bullet.enemies = self.enemies
+        bullet.object_manager = object_manager
         object_manager.append(bullet)
-        

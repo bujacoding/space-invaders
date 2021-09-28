@@ -12,3 +12,6 @@ class ObjectManager():
     def render(self, canvas):
         for object in self.objects:
             object.render(canvas)
+
+    def kill(self, object):
+        self.objects.remove(object)

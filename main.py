@@ -26,6 +26,7 @@ object_manager.append(ship)
 
 enemies = [Enemy(enemy_manager), Enemy(enemy_manager), Enemy(enemy_manager),
            Enemy(enemy_manager), Enemy(enemy_manager), ]
+ship.enemies = enemies
 
 for index, enemy in enumerate(enemies):
     enemy.set_x(index * enemy.get_width())
