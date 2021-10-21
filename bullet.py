@@ -4,6 +4,8 @@ BULLET_SPEED = 15
 
 
 class Bullet():
+    bulletcount = 0
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -21,6 +23,8 @@ class Bullet():
                 self.object_manager.kill(self)
                 self.object_manager.kill(enemy)
                 self.enemies.remove(enemy)
+        if self.y <= 0:
+            self.object_manager.kill(self)
 
         # enemy 하나씩 충돌 여부 확인
         # 충돌하였으면, 폭파시키고, 총알과 적기 사라짐
@@ -41,3 +45,6 @@ class Bullet():
             return False
         else:
             return True
+
+    def onKilled(self):
+        Bullet.bulletcount -= 1

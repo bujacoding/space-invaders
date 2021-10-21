@@ -14,4 +14,6 @@ class ObjectManager():
             object.render(canvas)
 
     def kill(self, object):
+        object.onKilled()
+
         self.objects.remove(object)

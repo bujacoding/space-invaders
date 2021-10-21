@@ -46,3 +46,6 @@ class Enemy:
 
     def render(self, canvas):
         canvas.blit(self.image, (self.x, self.y))
+
+    def onKilled(self):
+        pass

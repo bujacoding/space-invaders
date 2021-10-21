@@ -35,3 +35,6 @@ class Ship():
         bullet.enemies = self.enemies
         bullet.object_manager = object_manager
         object_manager.append(bullet)
+
+    def onKilled(self):
+        pass

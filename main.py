@@ -1,3 +1,4 @@
+from bullet import Bullet
 from enemy_manager import EnemyManager
 import pygame
 import sys
@@ -35,7 +36,6 @@ for index, enemy in enumerate(enemies):
 ship.set_initial_position(canvas)
 
 b_collision = False
-
 
 # 상수
 
@@ -78,7 +78,12 @@ while True:
             if event.key == ord("d"):
                 ship.move_to_right = True
             if event.key == pygame.K_SPACE:
-                ship.fire(object_manager)
+                print(Bullet.bulletcount)
+                if Bullet.bulletcount == 0:
+                    Bullet.bulletcount += 1
+                    ship.fire(object_manager)
+
+                  
 
         if not pause and event.type == KEYUP:
             if event.key == ord("a"):
