@@ -38,6 +38,10 @@ ship.set_initial_position(canvas)
 
 b_collision = False
 
+screen = "splash"
+
+splash = pygame.image.load("res/image/splash.jpg")
+
 # 상수
 
 
@@ -45,6 +49,7 @@ b_collision = False
 # 연산
 # 그리기
 # 애니메이션 연산
+next_screen = False
 
 
 def collision(a_x1, a_x2, a_y1, a_y2, b_x1, b_x2, b_y1, b_y2):
@@ -76,17 +81,22 @@ while True:
                 one_frame = True
 
         if not pause and event.type == KEYDOWN:
-            if event.key == ord("a"):
-                ship.move_to_left = True
-            if event.key == ord("d"):
-                ship.move_to_right = True
-            if event.key == pygame.K_SPACE:
-                print(Bullet.bulletcount)
-                if Bullet.bulletcount == 0:
-                    Bullet.bulletcount += 1
-                    ship.fire(object_manager)
+            if screen == "splash":
+                if event.key == ord('x'):
+                    next_screen = True
+            elif screen == "game":                
+                if event.key == ord("a"):
+                    ship.move_to_left = True
+                if event.key == ord("d"):
+                    ship.move_to_right = True
+                if event.key == pygame.K_SPACE:
+                    print(Bullet.bulletcount)
+                    if Bullet.bulletcount == 0:
+                        Bullet.bulletcount += 1
+                        ship.fire(object_manager)
 
         if not pause and event.type == KEYUP:
+            next_screen = False
             if event.key == ord("a"):
                 ship.move_to_left = False
             if event.key == ord("d"):
@@ -95,14 +105,24 @@ while True:
     # 연산
     if not pause or one_frame:
         one_frame = False
-        enemy_manager.update()
-        object_manager.update(canvas)
-        enemy_manager.clear()
+
+        if screen == "splash":
+            if next_screen == True:
+                screen = "game"
+        elif screen == "game":
+            enemy_manager.update()
+            object_manager.update(canvas)
+            enemy_manager.clear()
 
     # 그리기
+
     canvas.fill((255, 255, 255))
 
-    object_manager.render(canvas)
+    if screen == "splash":
+        canvas.blit(splash, (canvas.get_width() / 2 - splash.get_width() / 2,
+                             canvas.get_height() / 2 - splash.get_height() / 2))
+    elif screen == "game":
+        object_manager.render(canvas)
 
     pygame.display.update()
     clock.tick(60)
