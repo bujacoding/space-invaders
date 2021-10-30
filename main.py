@@ -13,6 +13,7 @@ os.environ['SDL_VIDEO_WINDOW_POS'] = f'{1000},{200}'
 pygame.init()
 
 pause = False
+one_frame = True
 canvas = pygame.display.set_mode((480, 640))
 pygame.display.set_caption('space invaders')
 clock = pygame.time.Clock()
@@ -71,6 +72,8 @@ while True:
                 ship.move_to_left = False
                 ship.move_to_right = False
                 pause = not pause
+            if event.key == ord("."):  # (.):(>)키
+                one_frame = True
 
         if not pause and event.type == KEYDOWN:
             if event.key == ord("a"):
@@ -83,8 +86,6 @@ while True:
                     Bullet.bulletcount += 1
                     ship.fire(object_manager)
 
-                  
-
         if not pause and event.type == KEYUP:
             if event.key == ord("a"):
                 ship.move_to_left = False
@@ -92,7 +93,8 @@ while True:
                 ship.move_to_right = False
 
     # 연산
-    if not pause:
+    if not pause or one_frame:
+        one_frame = False
         enemy_manager.update()
         object_manager.update(canvas)
         enemy_manager.clear()
@@ -103,5 +105,4 @@ while True:
     object_manager.render(canvas)
 
     pygame.display.update()
-
     clock.tick(60)
